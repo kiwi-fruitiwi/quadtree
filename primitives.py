@@ -26,6 +26,11 @@ class Rectangle():
         # BUG currently inserting points at (width, height) only inserts 1/4 of the time
         return (p.x >= self.x) and (p.x <= self.x+self.w) and (p.y >= self.y) and (p.y <= self.y+self.h)
 
+
+    # do we intersect with another rectangle?
+    def intersect(self, r):
+        
+    
     
     def __repr__(self):
         s = "I am a rectangle at point {},{} with width {} and height {}"

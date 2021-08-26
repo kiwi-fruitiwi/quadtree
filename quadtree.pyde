@@ -34,8 +34,14 @@ def setup():
     #     # but! we can also use this to compare with qt's points to find bugs
     #     points.append(p)
     
-    for i in range(100):
-        p = Point(width, height)
+    for i in range(10000):
+        x = randomGaussian() * (width * 0.2) + width/2
+        y = randomGaussian() * (height * 0.2) + height/2
+        
+        x = constrain(x, 0, width)
+        y = constrain(y, 0, height)
+        
+        p = Point(x, y)
         points.append(p)
         qt.insert(p)
     
@@ -51,8 +57,8 @@ def draw():
     
     # show where all of the points generated are
     strokeWeight(5)
-    for p in points:
-        point(p.x, p.y)
+    # for p in points:
+    #     point(p.x, p.y)
     
     text("{} out of {}".format(qt.count(), len(points)), 30, 30)
 

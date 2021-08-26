@@ -73,6 +73,15 @@ class Quadtree():
             return len(self.points) + self.northwest.count() + self.northeast.count() + self.southwest.count() + self.southeast.count()
         else:
             return len(self.points)
+        
+        
+    # return a list of points within a boundary
+    def query(self, target_boundary):
+        
+        # if there's no intersection, we don't need to do any work :3
+        if not self.boundary.intersects(target_boundary):
+            return
+            
     
     
     # return a list of points in this quadtree
