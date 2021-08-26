@@ -13,6 +13,8 @@ class Rectangle():
         self.y = y
         self.w = w
         self.h = h
+        
+        print(self)
     
     # test if this contains a point
     def contains(self, p):
@@ -21,5 +23,10 @@ class Rectangle():
         # but is also guaranteed to belong to the se boundary
         # the above is no longer true
         
-        
-        return (p.x >= self.x) and (p.x <= self.x+self.w) and (p.y >= self.y) and (p.y <= self.y+self.h)            
+        # BUG currently inserting points at (width, height) only inserts 1/4 of the time
+        return (p.x >= self.x) and (p.x <= self.x+self.w) and (p.y >= self.y) and (p.y <= self.y+self.h)
+
+    
+    def __repr__(self):
+        s = "I am a rectangle at point {},{} with width {} and height {}"
+        return s.format(self.x, self.y, self.w, self.h)        

@@ -3,8 +3,10 @@
 #
 # We're trying to build this without PVector
 # 
-# BUGS: why does it not count bottom left points in each boundary?
-# is this a rounding error?
+# BUG: why does it not count bottom left points in each boundary? rounding error?
+#          this was an integer division error in subdivide when we take w/2 instead of w/2.0
+# BUG: another problem was drawing points off screen with the mouse
+#          fixed!
 
 
 from primitives import Rectangle, Point
@@ -14,7 +16,7 @@ from Quadtree import Quadtree
 def setup():
     global qt, points
           
-    size(700, 700)
+    size(600, 600)
     colorMode(HSB, 360, 100, 100, 100)
     background(209, 95, 33)
     boundary = Rectangle(0, 0, width, height)
@@ -32,8 +34,12 @@ def setup():
     #     # but! we can also use this to compare with qt's points to find bugs
     #     points.append(p)
     
-    for i in range(50):
-        points.append(Point(width/2, height/2))
+    for i in range(100):
+        p = Point(width, height)
+        points.append(p)
+        qt.insert(p)
+    
+    print("Finished setup")
         
         
 def draw():
@@ -51,18 +57,31 @@ def draw():
     text("{} out of {}".format(qt.count(), len(points)), 30, 30)
 
 
+def add_point_at_mouse():
+    global qt, points
+    p = Point(mouseX, mouseY)
+    r = Rectangle(0,0, width, height)
+    
+    # we don't want to add any points outside of the canvas when we drag our mouse offscreen
+    if r.contains(p):
+        points.append(p)
+        qt.insert(p)
+    
+
 def mouseDragged():
     global qt, points
-    
-    p = Point(mouseX, mouseY)
-    points.append(p)
-    qt.insert(p)
-    print p
+    add_point_at_mouse()
     
 
 def mouseWheel(event):
-    print event
+    print event    
+    add_point_at_mouse()
     
-    p = Point(mouseX, mouseY)
-    points.append(p)
-    qt.insert(p)
+def keyPressed():
+    global qt, points
+    
+    # testing
+    if key == 'a':
+        p = Point(0, height)
+        points.append(p)
+        qt.insert(p)

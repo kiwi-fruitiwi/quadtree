@@ -7,13 +7,16 @@ class Quadtree():
         # how big is the quadtree? when do I need to subdivide? 
         # this is a job for capacity
         self.capacity = n
+        
+        # stores the list of points in this quadtree only, but not its children
         self.points = []
+        
+        # have we divided once yet?
         self.divided = False
 
 
     def insert(self, p): # p is a Point
         if not self.boundary.contains(p):
-            print 
             return False;
         
         if len(self.points) < self.capacity:
@@ -49,13 +52,13 @@ class Quadtree():
         w = self.boundary.w
         h = self.boundary.h        
         
-        nw = Rectangle(x, y, w/2, h/2)
-        ne = Rectangle(x+w/2, y, w/2, h/2)
-        sw = Rectangle(x, y+h/2, w/2, h/2)
-        se = Rectangle(x+w/2, y+h/2, w/2, h/2)
+        nw = Rectangle(x, y, w/2.0, h/2.0)
+        ne = Rectangle(x+w/2.0, y, w/2.0, h/2.0)
+        sw = Rectangle(x, y+h/2.0, w/2.0, h/2.0)
+        se = Rectangle(x+w/2.0, y+h/2.0, w/2.0, h/2.0)
         
-        self.northwest = Quadtree(nw, self.capacity)
         self.northeast = Quadtree(ne, self.capacity)
+        self.northwest = Quadtree(nw, self.capacity)
         self.southeast = Quadtree(se, self.capacity)
         self.southwest = Quadtree(sw, self.capacity)
         
