@@ -7,6 +7,9 @@
 #          this was an integer division error in subdivide when we take w/2 instead of w/2.0
 # BUG: another problem was drawing points off screen with the mouse
 #          fixed!
+#
+#
+# add query, querybox
 
 
 from primitives import Rectangle, Point
@@ -21,7 +24,11 @@ def setup():
     background(209, 95, 33)
     boundary = Rectangle(0, 0, width, height)
     qt = Quadtree(boundary, 4)
-    points = []    
+    points = []
+
+    mono = createFont("terminus.ttf", 16);
+    textFont(mono);   
+    noSmooth() 
     
     
     strokeWeight(1)
@@ -34,7 +41,7 @@ def setup():
     #     # but! we can also use this to compare with qt's points to find bugs
     #     points.append(p)
     
-    for i in range(10000):
+    for i in range(1000):
         x = randomGaussian() * (width * 0.2) + width/2
         y = randomGaussian() * (height * 0.2) + height/2
         
@@ -56,12 +63,26 @@ def draw():
     qt.show()
     
     # show where all of the points generated are
-    strokeWeight(5)
-    # for p in points:
-    #     point(p.x, p.y)
+    strokeWeight(2)
+    for p in points:
+        point(p.x, p.y)
     
-    text("{} out of {}".format(qt.count(), len(points)), 30, 30)
-
+    text("{} out of {}".format(qt.count(), len(points)), 10, 20)
+    
+    r = Rectangle(mouseX, mouseY, 107, 75)
+    stroke(90, 70, 100)
+    strokeWeight(2)
+    rect(r.x, r.y, r.w, r.h)  
+    test_points = qt.query(r)
+    
+    # let's see if the points are correct! highlight them a different color by 
+    # drawing over the old points
+    stroke(90, 70, 100)
+    strokeWeight(4)
+    for p in test_points:
+        point(p.x, p.y)
+    text("{} found".format(len(test_points)), 10, 35)
+        
 
 def add_point_at_mouse():
     global qt, points

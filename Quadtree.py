@@ -77,10 +77,27 @@ class Quadtree():
         
     # return a list of points within a boundary
     def query(self, target_boundary):
+        found = [] # 
         
         # if there's no intersection, we don't need to do any work :3
-        if not self.boundary.intersects(target_boundary):
-            return
+        if not self.boundary.intersect(target_boundary):
+            pass 
+        else:
+            # look through all points of this quadtree
+            for p in self.points:
+                if target_boundary.contains(p):
+                    found.append(p)
+            
+            # recurse through all of our children!
+            if self.divided:
+                found += self.northwest.query(target_boundary)
+                found += self.northeast.query(target_boundary)
+                found += self.southwest.query(target_boundary)
+                found += self.southeast.query(target_boundary)
+        
+        # return an empty array if we don't intersect and find nothing
+        # otherwise return the result of recursion
+        return found
             
     
     
