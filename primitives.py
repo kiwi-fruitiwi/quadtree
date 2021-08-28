@@ -1,4 +1,23 @@
-class Point():
+class Particle:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.r = 8
+    
+    
+    def move(self):
+        self.x += random(-1, 1)
+        self.y += random(-1, 1)
+    
+    
+    def render(self):
+        noStroke()
+        fill(0, 0, 100)
+        circle(self.x, self.y, self.r)
+        
+                
+
+class Point:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -7,7 +26,7 @@ class Point():
         return "({},{})".format(self.x, self.y)
         
 
-class Rectangle():
+class Rectangle:
     def __init__(self, x, y, w, h):
         self.x = x
         self.y = y
@@ -28,8 +47,8 @@ class Rectangle():
         return (p.x >= self.x) and (p.x <= self.x+self.w) and (p.y >= self.y) and (p.y <= self.y+self.h)
 
 
-    # do we intersect with another rectangle?
-    def intersect(self, target):
+    # do we intersects with another rectangle?
+    def intersects(self, target):
         # there are eight cases for intersection; we can reduce the computation time by 
         # finding the four cases that fail intersection and taking a logical NOT
         return not (

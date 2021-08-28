@@ -12,12 +12,12 @@
 # add query, querybox
 
 
-from primitives import Rectangle, Point
+from primitives import Rectangle, Point, Particle
 from Quadtree import Quadtree
 
 
 def setup():
-    global qt, points
+    global qt, points, particles
           
     size(600, 600)
     colorMode(HSB, 360, 100, 100, 100)
@@ -56,7 +56,7 @@ def setup():
         
         
 def draw():
-    global qt, points
+    global qt, points, particles
     
     background(209, 95, 33)
     strokeWeight(1)
@@ -69,7 +69,11 @@ def draw():
     
     text("{} out of {}".format(qt.count(), len(points)), 10, 20)
     
-    r = Rectangle(mouseX, mouseY, 107, 75)
+    
+    # r = Rectangle(mouseX, mouseY, 108, 76) # top left corner seeking rectangle
+    
+    # these coordinates make our mouse centered on our rectangle
+    r = Rectangle(mouseX-54, mouseY-38, 108, 76)
     stroke(90, 70, 100)
     strokeWeight(2)
     rect(r.x, r.y, r.w, r.h)  
